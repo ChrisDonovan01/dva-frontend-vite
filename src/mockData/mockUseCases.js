@@ -1,0 +1,126 @@
+const mockUseCases = {
+  "1": {
+    title: "Precision Medicine Initiatives",
+    category: "Research & Data Product Collaborations",
+    type: "Direct Monetization",
+    rank: "1st of 53",
+    priority: "Aggressively Pursue",
+    roiRange: "$5M - $15M+ annually",
+    timeToRoi: "6–9 months",
+    summary: "Leverages genomic and clinical data to deliver tailored therapies and unlock high-value partnerships.",
+    alignmentScore: 92,
+    alignmentNarrative: "Strong alignment with research strategy, population health innovation, and growth.",
+    roiNarrative: "Expected $10M in net-new revenue via pharma and research collaborations.",
+    description: "This use case allows health systems to personalize care by leveraging genomic and clinical data to generate research partnerships and drive precision care.",
+    dataAssets: "EHR, Genomics, Outcomes, Claims",
+    measures: [
+      { label: "Strategic Fit", score: 9.5, rationale: "Aligns with strategic precision care priorities." },
+      { label: "Financial Impact", score: 9.8, rationale: "High R&D and pharma collaboration potential." },
+      { label: "Implementation Readiness", score: 7.2, rationale: "Requires genomics integration and partner contracts." },
+    ],
+    technicalReadiness: "Moderate",
+    integrationComplexity: "Moderate",
+    compliance: "Requires IRB, HIPAA de-ID standards",
+    resources: "R&D coordinator, genomics analyst, compliance officer",
+    playbookSections: [
+      "Executive Summary",
+      "Financial Modeling & ROI Assessment",
+      "Strategic Alignment",
+      "Regulatory & Compliance Framework"
+    ],
+  },
+
+  "2": {
+    title: "Supply Chain Optimization",
+    category: "Operational Excellence Through Data Optimization",
+    type: "Indirect Monetization",
+    rank: "8th of 53",
+    priority: "High Value / Easy to Implement",
+    roiRange: "5%–15% annual cost savings",
+    timeToRoi: "3–4 months",
+    summary: "Uses predictive analytics to streamline procurement, inventory, and logistics, reducing operational waste and boosting margin.",
+    alignmentScore: 81,
+    alignmentNarrative: "Supports cost-saving initiatives and operational efficiency mandates across supply chain operations.",
+    roiNarrative: "Historical case studies show consistent savings of 8–12% in supply chain costs with minimal tech lift.",
+    description: "This use case leverages machine learning to predict inventory needs, optimize vendor contracts, and reduce overstock and stockouts.",
+    dataAssets: "ERP, procurement logs, vendor contracts, inventory systems",
+    measures: [
+      { label: "Strategic Fit", score: 8.2, rationale: "Supports margin recovery and OPEX efficiency strategy." },
+      { label: "Financial Impact", score: 9.1, rationale: "Strong historical proof across health systems and IDNs." },
+      { label: "Implementation Readiness", score: 8.5, rationale: "Requires minimal integration — often leverages existing ERP feeds." },
+    ],
+    technicalReadiness: "High",
+    integrationComplexity: "Low",
+    compliance: "Minimal compliance lift; no PHI involved",
+    resources: "Supply chain manager, data engineer, analytics lead",
+    playbookSections: [
+      "Operational Impact",
+      "ROI & Cost Savings Summary",
+      "Implementation Roadmap",
+      "Success Metrics & KPIs"
+    ],
+  },
+
+  "3": {
+    title: "AI-Powered Readmission Reduction",
+    category: "Value-Based Care & Payer Innovation",
+    type: "Indirect Monetization",
+    rank: "4th of 53",
+    priority: "Payer Aligned / Risk Reducing",
+    roiRange: "$500K - $2M annual shared savings",
+    timeToRoi: "4–6 months",
+    summary: "Applies AI models to predict readmission risk and trigger care coordination workflows to improve patient outcomes and reduce penalties.",
+    alignmentScore: 88,
+    alignmentNarrative: "Aligns tightly with value-based care contracts and improves performance on risk-based arrangements.",
+    roiNarrative: "Reduces avoidable readmissions and improves quality scores—leading to lower penalties and greater upside in payer contracts.",
+    description: "Integrates predictive analytics and alerts into discharge planning workflows to intervene early with at-risk patients.",
+    dataAssets: "EHR, readmission history, SDoH, ADT feeds",
+    measures: [
+      { label: "Strategic Fit", score: 9.1, rationale: "Directly aligns with payer contracts and CMS performance measures." },
+      { label: "Financial Impact", score: 8.7, rationale: "Moderate direct savings but critical for maintaining shared savings eligibility." },
+      { label: "Implementation Readiness", score: 7.9, rationale: "Requires care management system integration and stakeholder training." },
+    ],
+    technicalReadiness: "Moderate",
+    integrationComplexity: "Moderate",
+    compliance: "HIPAA secure, minimal patient re-identification risk",
+    resources: "Care coordination lead, analytics engineer, clinical informaticist",
+    playbookSections: [
+      "Value-Based Strategy Alignment",
+      "Predictive Modeling Overview",
+      "Quality Metrics & Performance Tracking"
+    ],
+  },
+
+  "4": {
+    title: "Health Data Marketplace Integration",
+    category: "Research & Data Product Collaborations",
+    type: "Direct Monetization",
+    rank: "6th of 53",
+    priority: "Scalable Revenue Model",
+    roiRange: "$2M - $5M annually",
+    timeToRoi: "6–12 months",
+    summary: "Licenses de-identified clinical and operational data via a secure marketplace platform to external research buyers and life sciences partners.",
+    alignmentScore: 85,
+    alignmentNarrative: "Supports innovation partnerships, generates recurring revenue, and enhances brand positioning.",
+    roiNarrative: "Data marketplaces have generated millions in revenue at other systems with similar profiles. Projected revenue based on volume and buyer appetite.",
+    description: "Ingests and de-identifies patient-level data, packages it for marketplace ingestion, and enables secure license-based access to external partners.",
+    dataAssets: "EHR, claims, genomics, device data",
+    measures: [
+      { label: "Strategic Fit", score: 9.0, rationale: "Enables R&D growth without disrupting clinical ops." },
+      { label: "Financial Impact", score: 8.9, rationale: "High potential for recurring, scalable revenue." },
+      { label: "Implementation Readiness", score: 6.5, rationale: "Requires upfront investment in compliance, de-ID, and marketplace onboarding." },
+    ],
+    technicalReadiness: "Moderate to Low",
+    integrationComplexity: "High",
+    compliance: "Requires Expert Determination, contractual controls, and tokenization",
+    resources: "Privacy officer, compliance counsel, external marketplace vendor",
+    playbookSections: [
+      "Data Monetization Strategy",
+      "Legal & Compliance",
+      "External Partnerships",
+      "Revenue Forecasting"
+    ],
+  }
+};
+
+export default mockUseCases;

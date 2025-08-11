@@ -1,0 +1,384 @@
+/* src/components/summaries/summaryExecView.css */
+
+/* Container and Layout */
+.sev-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+  color: #374151;
+  line-height: 1.6;
+}
+
+/* Header Section */
+.sev-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* Meta Pills */
+.sev-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.sev-pill {
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.sev-pill.sev-type-strategy {
+  background: #fef3c7;
+  border-color: #fcd34d;
+  color: #92400e;
+}
+
+.sev-pill.sev-type-capabilities {
+  background: #dbeafe;
+  border-color: #60a5fa;
+  color: #1e40af;
+}
+
+.sev-pill.sev-type-readiness {
+  background: #d1fae5;
+  border-color: #34d399;
+  color: #065f46;
+}
+
+/* Action Buttons */
+.sev-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.sev-action-btn {
+  background: white;
+  border: 1px solid #e5e7eb;
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sev-action-btn:hover:not(:disabled) {
+  background: #f9fafb;
+  border-color: #d1d5db;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.sev-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sev-action-btn.sev-regenerate {
+  background: #18365e;
+  color: white;
+  border-color: #18365e;
+}
+
+.sev-action-btn.sev-regenerate:hover:not(:disabled) {
+  background: #0f1f33;
+  border-color: #0f1f33;
+}
+
+/* Main Grid Layout */
+.sev-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .sev-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .sev-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .sev-actions {
+    width: 100%;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+}
+
+.sev-main,
+.sev-aside {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Cards */
+.sev-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.sev-card h3 {
+  margin: 0;
+  padding: 16px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #18365e;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.sev-body {
+  padding: 20px;
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* Card Tones */
+.sev-card.sev-positive {
+  border-left: 4px solid #10b981;
+}
+
+.sev-card.sev-positive h3 {
+  background: #f0fdf4;
+  color: #065f46;
+}
+
+.sev-card.sev-warning {
+  border-left: 4px solid #f59e0b;
+}
+
+.sev-card.sev-warning h3 {
+  background: #fffbeb;
+  color: #92400e;
+}
+
+/* Typography */
+.sev-paragraphs p {
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+}
+
+.sev-paragraphs p:last-child {
+  margin-bottom: 0;
+}
+
+/* Lists */
+.sev-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sev-list li {
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.sev-list li:last-child {
+  margin-bottom: 0;
+}
+
+.sev-numbered li {
+  counter-increment: item;
+}
+
+.sev-numbered li strong {
+  color: #18365e;
+  font-weight: 600;
+  min-width: 24px;
+}
+
+.sev-bullets .sev-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+/* Toggle Button */
+.sev-toggle {
+  margin-top: 12px;
+  padding: 6px 12px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sev-toggle:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* Empty State */
+.sev-empty {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.sev-empty-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.sev-empty h3 {
+  margin: 0 0 12px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.sev-empty p {
+  margin: 0 0 24px 0;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.sev-generate-btn {
+  padding: 12px 32px;
+  background: #18365e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sev-generate-btn:hover:not(:disabled) {
+  background: #0f1f33;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sev-generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.sev-footer {
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+.sev-footer-text {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* Print Styles */
+@media print {
+  .sev-header,
+  .sev-actions,
+  .sev-toggle,
+  .sev-footer {
+    display: none !important;
+  }
+  
+  .sev-container {
+    padding: 0;
+    gap: 16px;
+  }
+  
+  .sev-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .sev-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #d1d5db;
+    margin-bottom: 16px;
+  }
+  
+  .sev-card h3 {
+    background: white;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 12px 16px;
+    font-size: 16px;
+  }
+  
+  .sev-body {
+    padding: 16px;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  
+  .sev-paragraphs p {
+    margin-bottom: 8px;
+  }
+  
+  .sev-list li {
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+  
+  /* Show all collapsed content when printing */
+  .sev-paragraphs {
+    max-height: none !important;
+  }
+}
+
+/* Loading Animation */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.sev-loading {
+  background: linear-gradient(
+    90deg,
+    #f3f4f6 25%,
+    #e5e7eb 50%,
+    #f3f4f6 75%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+  border-radius: 8px;
+  height: 20px;
+  margin-bottom: 12px;
+}

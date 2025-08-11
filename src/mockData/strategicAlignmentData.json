@@ -1,0 +1,131 @@
+[
+  {
+    "initiative_id": "1",
+    "initiative_name": "Interoperability & Data Exchange",
+    "scores": {
+      "total_alignment": 92,
+      "value_score": 95,
+      "ease_of_implementation": 75,
+      "metrics": {
+        "revenue_potential_cost_savings": {
+          "revenue_generation": 85,
+          "cost_savings": 90,
+          "long_term_value": 96
+        },
+        "strategic_goal_alignment": {
+          "core_mission_support": 95,
+          "competitive_differentiation": 92,
+          "value_based_care_integration": 94,
+          "strategic_growth_viability": 97,
+          "operational_efficiency": 91
+        },
+        "data_readiness_availability": {
+          "data_quality_completeness": 88,
+          "data_accessibility_integration": 93,
+          "real_time_data_capability": 95
+        },
+        "regulatory_compliance": {
+          "data_security_privacy": 90,
+          "regulatory_framework_alignment": 88,
+          "patient_consent_readiness": 85
+        },
+        "organizational_readiness": {
+          "technical_infrastructure": 89,
+          "staff_expertise": 92,
+          "resource_allocation": 88
+        },
+        "time_to_value": {
+          "implementation_complexity": 70,
+          "market_readiness": 95,
+          "speed_to_generate_returns": 90
+        }
+      }
+    }
+  },
+  {
+    "initiative_id": "2",
+    "initiative_name": "Population Health Analytics",
+    "scores": {
+      "total_alignment": 90,
+      "value_score": 93,
+      "ease_of_implementation": 68,
+      "metrics": {
+        "revenue_potential_cost_savings": {
+          "revenue_generation": 90,
+          "cost_savings": 92,
+          "long_term_value": 95
+        },
+        "strategic_goal_alignment": {
+          "core_mission_support": 93,
+          "competitive_differentiation": 90,
+          "value_based_care_integration": 96,
+          "strategic_growth_viability": 92,
+          "operational_efficiency": 89
+        },
+        "data_readiness_availability": {
+          "data_quality_completeness": 85,
+          "data_accessibility_integration": 88,
+          "real_time_data_capability": 83
+        },
+        "regulatory_compliance": {
+          "data_security_privacy": 89,
+          "regulatory_framework_alignment": 86,
+          "patient_consent_readiness": 82
+        },
+        "organizational_readiness": {
+          "technical_infrastructure": 86,
+          "staff_expertise": 90,
+          "resource_allocation": 85
+        },
+        "time_to_value": {
+          "implementation_complexity": 65,
+          "market_readiness": 88,
+          "speed_to_generate_returns": 85
+        }
+      }
+    }
+  },
+  {
+    "initiative_id": "3",
+    "initiative_name": "Real-Time Clinical Decision Support",
+    "scores": {
+      "total_alignment": 88,
+      "value_score": 92,
+      "ease_of_implementation": 60,
+      "metrics": {
+        "revenue_potential_cost_savings": {
+          "revenue_generation": 80,
+          "cost_savings": 85,
+          "long_term_value": 92
+        },
+        "strategic_goal_alignment": {
+          "core_mission_support": 94,
+          "competitive_differentiation": 95,
+          "value_based_care_integration": 92,
+          "strategic_growth_viability": 89,
+          "operational_efficiency": 88
+        },
+        "data_readiness_availability": {
+          "data_quality_completeness": 90,
+          "data_accessibility_integration": 85,
+          "real_time_data_capability": 95
+        },
+        "regulatory_compliance": {
+          "data_security_privacy": 87,
+          "regulatory_framework_alignment": 85,
+          "patient_consent_readiness": 88
+        },
+        "organizational_readiness": {
+          "technical_infrastructure": 82,
+          "staff_expertise": 88,
+          "resource_allocation": 80
+        },
+        "time_to_value": {
+          "implementation_complexity": 60,
+          "market_readiness": 85,
+          "speed_to_generate_returns": 80
+        }
+      }
+    }
+  }
+]
