@@ -114,6 +114,24 @@ class SimpleCache {
 
 const cache = new SimpleCache();
 
+// Helper function to get canonical client ID
+const getCanonicalClientId = () => {
+  // Check URL params first
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlClientId = urlParams.get('client_id') || urlParams.get('clientId');
+  if (urlClientId) return urlClientId;
+  
+  // Check localStorage
+  const storedClientId = localStorage.getItem('client_id') || localStorage.getItem('clientId');
+  if (storedClientId) return storedClientId;
+  
+  // Default to 1
+  return '1';
+};
+
+// Export the helper function
+export { getCanonicalClientId };
+
 // Add request interceptor for auth token and request tracking
 api.interceptors.request.use(
   (config) => {
@@ -123,8 +141,27 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
     
+    // Ensure consistent client_id in requests
+    const canonicalClientId = getCanonicalClientId();
+    
+    // Add client_id to params for GET requests
+    if (config.method === 'get' && !config.params) {
+      config.params = {};
+    }
+    if (config.method === 'get' && !config.params.client_id) {
+      config.params.client_id = canonicalClientId;
+    }
+    
+    // Add client_id to request body for POST/PUT/PATCH requests
+    if (['post', 'put', 'patch'].includes(config.method) && config.data) {
+      if (typeof config.data === 'object' && !Array.isArray(config.data)) {
+        config.data.client_id = config.data.client_id || canonicalClientId;
+      }
+    }
+    
     // Add request ID for tracking
     config.headers['X-Request-ID'] = generateRequestId();
+    config.headers['X-Client-ID'] = canonicalClientId;
     
     // Add timestamp
     config.metadata = { startTime: new Date() };
@@ -132,7 +169,11 @@ api.interceptors.request.use(
     // Log request in development
     const isDev = getEnvVar('VITE_NODE_ENV', 'development') === 'development';
     if (isDev) {
-      console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`, config.data);
+      console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`, {
+        params: config.params,
+        data: config.data,
+        clientId: canonicalClientId
+      });
     }
     
     return config;
@@ -372,6 +413,10 @@ export const saveSurveyResponses = async (clientId, surveyType, data, options = 
   try {
     // Clear response cache since we're updating
     cache.delete(`survey-responses-${clientId}-${surveyType}`);
+    // Also clear progress cache to force recalculation
+    cache.delete(`all-progress-${clientId}`);
+    cache.delete(`survey-status-${clientId}-${surveyType}`);
+    cache.delete(`all-surveys-status-${clientId}`);
     
     const payload = {
       client_id: clientId,
@@ -441,9 +486,12 @@ export const batchSaveSurveyResponses = async (responses) => {
  */
 export const completeSurvey = async (clientId, surveyType, userId) => {
   try {
-    // Clear caches
+    // Clear caches to ensure fresh data after completion
     cache.delete(`survey-responses-${clientId}-${surveyType}`);
     cache.delete(`survey-status-${clientId}-${surveyType}`);
+    cache.delete(`all-progress-${clientId}`);
+    cache.delete(`all-surveys-status-${clientId}`);
+    cache.delete(`survey-summary-${clientId}-${surveyType}`);
     
     const response = await retryRequest(() =>
       api.post('/survey/complete', {
@@ -765,6 +813,126 @@ export const clearAllCaches = () => {
 };
 
 /**
+ * Get all survey progress for a client (calculates from questions + responses)
+ */
+export const getAllProgress = async (clientId) => {
+  const cacheKey = `all-progress-${clientId}`;
+  
+  try {
+    // Calculate progress for each survey type
+    const surveyTypes = ['strategy', 'capabilities', 'readiness'];
+    const allProgress = {};
+    
+    for (const surveyType of surveyTypes) {
+      try {
+        // Get survey definition to know total questions
+        const definition = await getSurveyDefinition(surveyType);
+        const totalQuestions = definition.questions ? definition.questions.length : 0;
+        
+        // Get saved responses to calculate answered count
+        const responses = await getSurveyResponses(clientId, surveyType);
+        let answeredCount = 0;
+        
+        if (responses && responses.responses) {
+          // Count non-empty responses
+          answeredCount = Object.values(responses.responses).filter(response => {
+            if (!response) return false;
+            if (Array.isArray(response)) return response.length > 0;
+            if (typeof response === 'string') return response.trim() !== '';
+            if (typeof response === 'object' && response.file) return true;
+            return response !== null && response !== undefined;
+          }).length;
+        }
+        
+        allProgress[surveyType] = {
+          answered: answeredCount,
+          total: totalQuestions
+        };
+        
+        console.log(`${surveyType}: ${answeredCount}/${totalQuestions} answered`);
+      } catch (error) {
+        console.warn(`Error getting progress for ${surveyType}:`, error);
+        // Return default values for this survey type
+        const defaultTotals = { strategy: 9, capabilities: 14, readiness: 14 };
+        allProgress[surveyType] = {
+          answered: 0,
+          total: defaultTotals[surveyType] || 0
+        };
+      }
+    }
+    
+    return allProgress;
+  } catch (error) {
+    console.error('Error fetching all progress:', error);
+    // Return default structure
+    return {
+      strategy: { answered: 0, total: 9 },
+      capabilities: { answered: 0, total: 14 },
+      readiness: { answered: 0, total: 14 }
+    };
+  }
+};
+
+/**
+ * Get survey summary/results for a specific survey type
+ */
+export const getSummary = async (clientId, surveyType) => {
+  const cacheKey = `survey-summary-${clientId}-${surveyType}`;
+  const cached = cache.get(cacheKey);
+  if (cached) return cached;
+  
+  try {
+    // Try multiple endpoints for summary data
+    const endpoints = [
+      `/survey/summary/${clientId}/${surveyType}`,
+      `/survey/${surveyType}/summary/${clientId}`,
+      `/api/survey/summary?${buildQueryString({ client_id: clientId, survey_type: surveyType })}`,
+      `/summary/${surveyType}/${clientId}`,
+    ];
+    
+    for (const endpoint of endpoints) {
+      try {
+        const response = await retryRequest(() => api.get(endpoint));
+        
+        if (response.data) {
+          cache.set(cacheKey, response.data);
+          return response.data;
+        }
+      } catch (err) {
+        if (err.response?.status !== 404) {
+          console.warn(`Summary endpoint ${endpoint} failed:`, err.message);
+        }
+      }
+    }
+    
+    // If no summary found, return a default structure
+    return {
+      surveyType,
+      clientId,
+      title: getSurveyDisplayName(surveyType),
+      status: 'no_data',
+      message: 'No summary data available yet. Complete the survey to generate insights.',
+      lastUpdated: null
+    };
+  } catch (error) {
+    console.error('Error fetching survey summary:', error);
+    throw error;
+  }
+};
+
+/**
+ * Map survey types to display names
+ */
+export const getSurveyDisplayName = (surveyType) => {
+  const displayNames = {
+    strategy: 'Strategic Priorities',
+    capabilities: 'Data & Analytics Capabilities', 
+    readiness: 'Data Readiness & Governance'
+  };
+  return displayNames[surveyType] || surveyType;
+};
+
+/**
  * Get mock survey data for development
  */
 const getMockSurveyData = (surveyType) => {
@@ -925,4 +1093,7 @@ export default {
   getSurveyAnalytics,
   processOfflineQueue,
   clearAllCaches,
+  getAllProgress,
+  getSummary,
+  getSurveyDisplayName,
 };

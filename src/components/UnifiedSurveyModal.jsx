@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import UnifiedSurvey from './UnifiedSurvey';
+import { getSurveyDisplayName } from '../services/surveyService';
 
 const UnifiedSurveyModal = ({
   isOpen,
@@ -70,11 +71,17 @@ const UnifiedSurveyModal = ({
           display: 'flex', flexDirection: 'column'
         }}
       >
-        {/* Minimal top bar: close only */}
+        {/* Header with survey name */}
         <div style={{
-          display: 'flex', justifyContent: 'flex-end', alignItems: 'center',
-          padding: '10px 12px', borderBottom: '1px solid #eee', flexShrink: 0
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '12px 16px', borderBottom: '1px solid #eee', flexShrink: 0,
+          backgroundColor: '#f8fafc'
         }}>
+          <h2 style={{
+            margin: 0, fontSize: '18px', fontWeight: '600', color: '#1f2937'
+          }}>
+            {getSurveyDisplayName(surveyType)}
+          </h2>
           <button
             aria-label="Close"
             onClick={onClose}
@@ -96,6 +103,7 @@ const UnifiedSurveyModal = ({
             clientId={clientId}
             userId={userId}
             surveyType={surveyType}
+            surveyTitle={getSurveyDisplayName(surveyType)}
             onComplete={onComplete}
             onSaveAndExit={onSaveAndExit}
           />

@@ -8,7 +8,7 @@ import DataReadinessSurveyWrapper from '../components/DataReadinessSurveyWrapper
 import OpportunityAssessmentResults from '../components/OpportunityAssessmentResults';
 import UnifiedSummaryModal from '../components/UnifiedSummaryModal';
 import NetworkStatusBanner from '../components/NetworkStatusBanner';  // ADD THIS IMPORT
-import SurveyService from '../services/surveyService';
+import SurveyService, { getCanonicalClientId } from '../services/surveyService';
 import useSummary from '../hooks/useSummary';
 
 // Normalize progress data helper functions
@@ -26,7 +26,9 @@ const toTotal = (val, fallback = 0) => {
 };
 
 const HomePage = () => {
-  const { clientId = '101' } = useParams();
+  // Use canonical client ID with fallback to URL param
+  const { clientId: urlClientId } = useParams();
+  const clientId = urlClientId || getCanonicalClientId();
   
   // Tab state
   const [activeTab, setActiveTab] = useState('inputs');

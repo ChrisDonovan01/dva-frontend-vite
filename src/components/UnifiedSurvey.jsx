@@ -529,6 +529,9 @@ const UnifiedSurvey = ({
         await surveyService.completeSurvey(effectiveClientId, surveyType, effectiveUserId);
       }
       
+      // Clear caches to ensure HomePage updates immediately
+      surveyService.clearAllCaches();
+      
       // Clear draft
       clearDraft();
       
@@ -561,6 +564,10 @@ const UnifiedSurvey = ({
     try {
       setSaving(true);
       await autoSave(responses);
+      
+      // Clear caches to ensure HomePage reflects changes
+      surveyService.clearAllCaches();
+      
       if (onSaveAndExit) {
         onSaveAndExit();
       } else if (onClose) {
